@@ -1,0 +1,244 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Catalog REST API
+  description:  API for Catalog, Category, Product
+host: smarterwith-shop.com
+basePath: /api/v1
+tags:
+  - name: "catalog"
+    description: "Everything about Catalog"
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+externalDocs:
+  description: About open Api specification
+  url:  https://swagger.io/docs/specification/about/
+paths:
+  /products/search:
+    get:
+      tags:
+        - catalog
+      description: Returns a list of products and additional data such as available sorting and other options. It can include recommendation suggestions.
+      operationId: searchProducts
+      produces:
+        - application/json
+      parameters:
+        - name: q
+          in: query
+          description: free text search
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of products returned
+          required: false
+          type: integer
+          default: 20
+        - name: currentPage
+          in: query
+          description: The current page requested
+          required: false
+          type: integer
+          default: 1
+        - name: sort
+          in: query
+          description: The current page sorting
+          required: false
+          type: string
+          enum: [relevance, price-asc, price-desc]
+          default: price-desc
+      responses:
+        '200':
+          description: ProductSearch response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductSearch'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /products/{productCode}:
+    get:
+      tags:
+        - catalog
+      description: Returns a list of categories in catalog.
+      operationId: findProductById
+      produces:
+        - application/json
+      parameters:
+        - name: productCode
+          in: path
+          description: catalog id to filter categories by
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Products Details response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductDetails'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /catalogs/{catalogId}/categories:
+    get:
+      tags:
+        - catalog
+      description: Returns a list of categories in catalog.
+      operationId: findCategories
+      produces:
+        - application/json
+      parameters:
+        - name: catalogId
+          in: path
+          description: catalog id to filter categories by
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Category Search response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Category'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /catalogs/{catalogId}/categories/{categoryCode}/products:
+    get:
+      tags:
+        - catalog
+      description: Returns a list of categories in catalog.
+      operationId: findProducsInCategory
+      produces:
+        - application/json
+      parameters:
+        - name: catalogId
+          in: path
+          description: catalog id to filter categories by
+          required: true
+          type: string
+        - name: categoryCode
+          in: path
+          description: category Codeto filter products by
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Products in Category Search response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductSearch'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  ProductSearch:
+    type: object
+    properties:
+      freeTextSearch:
+        type: string
+      sort:
+        type: string
+      categoryCode:
+        type: string
+      products:
+        type: array
+        items:
+          $ref: "#/definitions/Product"
+      pagination:
+        $ref: "#/definitions/Pagination"
+  Pagination:
+    type: object
+    properties:
+      currentPage:
+        type: integer
+      limit:
+        type: integer
+      totalSize:
+        type: integer
+  Product:
+    type: object
+    required:
+      - code
+      - name
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      price:
+        $ref: "#/definitions/Price"
+      images:
+        type: array
+        items:
+          $ref: "#/definitions/Image"
+  ProductDetails:
+    type: object
+    properties:
+      product:
+        $ref: "#/definitions/Product"
+      stocks:
+        type: array
+        items:
+          $ref: "#/definitions/Stock"
+  Stock:
+    type: object
+    properties:
+      name:
+        type: string
+      amount:
+        type: integer
+  Price:
+    type: object
+    properties:
+      amount:
+        type: integer
+        format: double
+      currencyIso:
+        type: string
+  Image:
+    type: object
+    properties:
+      url:
+        type: string
+      altText:
+        type: string
+      mainImage:
+        type: boolean
+        default: false
+  Category:
+    type: object
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+  Error:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
