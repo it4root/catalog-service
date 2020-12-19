@@ -1,0 +1,49 @@
+version: '3.7'
+services:
+  catalog-postgresql:
+    image: postgres:12.1
+    container_name: catalog-postgresql
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: catalog_p
+      POSTGRES_USER: catalog_u
+      POSTGRES_DB: catalog_db
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    depends_on:
+      - catalog-postgresql
+    ports:
+      - 5050:5050
+    networks:
+      - backend
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.admin
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 5050
+    restart: unless-stopped
+
+  catalog-service:
+    image: it4root/catalog-service:latest
+    container_name: catalog-service
+    depends_on:
+      - catalog-postgresql
+    ports:
+      - 8083:8083
+    networks:
+      - backend
+volumes:
+  dbdata:
+  pgadmin-data:
+networks:
+  backend:
+    name: app
+    driver: bridge
