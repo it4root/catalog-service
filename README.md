@@ -13,12 +13,70 @@ $ docker-compose up
 ```
 * app  http://localhost:8083/actuator
 * pgAdmin http://localhost:5050/login
+* swagger ui http://localhost:8083/swagger-ui.html
 
-List of planned work:
+TASK:
 ------------------------
-- catalog-service api design (first version of catalog API prepared - docs/catalog-api-conduct.yml))
-- order-service
+- event storming and DDD
+- swagger and open API
+- docker
+- docker-compose
+- kubernetes
+- metrics and visualization: Prometheus and Grafana
+- service discovery and config server: consul vs zookeeper vs ansible?
+
 - [to be completed]
 
+Planned Technologies during application evolution:
+------------------------
+- Java 8
+- Lombok
 
+- Spring Boot
+- Spring Core
+- Spring Data
+- Spring Security
+- Spring MVC
+
+- Hibernate
+- PostgreSQL
+- MongoDB
+- Redis
+- Liquidbase
+- ElasticSearch
+- Cassandra ?
+
+
+- RabbitMQ
+
+- REST
+Swagger
+- RPC
+- Websocket
+
+- RestAssured ?
+- JUnit
+- Spock
+- Mockito
+- Jepsen
+
+- ELK
+- Hystrix
+- Kibana
+- Grafana
+- Prometheus
+- Haproxy
+- Zookeeper ?
+- Ansible
+
+- Angular ?
+
+-------------------
+
+TDD/BDD.
+SOLID
+DDD
+CQRS
+Event sourcing
+Code quality(Sonar)
 
