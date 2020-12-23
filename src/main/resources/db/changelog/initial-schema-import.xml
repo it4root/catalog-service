@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="initial-schema-import-1" author="it4root">
+        <sql>
+            create table category
+            (
+            id UUID not null,
+            code varchar(255) not null,
+            description varchar(255),
+            display_name varchar(255) not null,
+            version bigint
+            );
+        </sql>
+
+        <sql>
+            create table product
+            (
+            id  UUID not null,
+            article_number varchar(255) not null,
+            created_date timestamp without time zone,
+            description varchar(255) not null,
+            modified_date timestamp without time zone,
+            name varchar(255) not null,
+            publish_status_id varchar(255) not null,
+            version bigint,
+            price_id UUID
+            );
+        </sql>
+        <sql>
+            create table product_rel_category
+            (
+            category_id UUID not null,
+            product_id UUID  not null
+            );
+        </sql>
+        <sql>
+            create table price
+            (
+            id UUID not null,
+            base_amount numeric(19,2),
+            currency_iso varchar(255)
+            );
+        </sql>
+        <sql>
+            create table image
+            (
+            id UUID  not null,
+            alt_text varchar(255)  not null,
+            main_image boolean,
+            url varchar(255) not null,
+            product_id UUID not null
+            );
+        </sql>
+
+        <sql>
+
+            alter table category add constraint p_category_id primary key (id);
+            alter table category add constraint uk_category_code unique (code);
+
+            alter table product add constraint p_product_id primary key (id);
+            alter table product add constraint uk_product_article_number unique (article_number);
+
+            alter table price add constraint p_price_id primary key (id);
+            alter table image add constraint p_image_id primary key (id);
+
+            alter table product add constraint fk_product_price_id foreign key (price_id) references price(id);
+
+            alter table product_rel_category add constraint fk_product_to_category foreign key (product_id) references product(id);
+            alter table product_rel_category add constraint fk_category_to_product foreign key (category_id) references category(id);
+
+            alter table image add constraint fk_image_product_id foreign key (product_id) references product(id);
+
+        </sql>
+
+        <rollback>
+            drop table if exists category cascade;
+            drop table if exists product cascade;
+            drop table if exists product_rel_category cascade;
+            drop table if exists price cascade;
+            drop table if exists image cascade;
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
+

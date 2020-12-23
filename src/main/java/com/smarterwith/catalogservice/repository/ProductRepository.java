@@ -1,9 +1,12 @@
 package com.smarterwith.catalogservice.repository;
 
-import com.smarterwith.catalogservice.entity.Catalog;
+import com.smarterwith.catalogservice.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
-public interface CatalogRepository extends JpaRepository<Catalog, String>{
+public interface ProductRepository extends JpaRepository<Product, UUID>{
+    
 }

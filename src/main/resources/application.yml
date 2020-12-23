@@ -1,11 +1,12 @@
 spring:
   liquibase:
-    enabled: false
-    change-log: classpath:/db.changelog/db.changelog-master.yaml
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+
   datasource:
-    url: jdbc:postgresql://catalog-postgresql:5432/catalog_test_db
-    username: test_u
-    password: test_p
+    url: jdbc:postgresql://localhost:5432/catalog_db
+    username: catalog_u
+    password: catalog_p
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
@@ -14,4 +15,5 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-
+server:
+  port: 8083

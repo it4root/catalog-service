@@ -2,7 +2,7 @@ package com.smarterwith.catalogservice.controller;
 
 import com.google.common.collect.Lists;
 import com.smarterwith.catalogservice.dto.*;
-import com.smarterwith.catalogservice.service.CatalogService;
+import com.smarterwith.catalogservice.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CatalogControllerTest {
 
     @MockBean
-    private CatalogService catalogService;
+    private ProductService productService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,7 +45,7 @@ class CatalogControllerTest {
                                 .build()
                 )).build();
 
-        given(catalogService.searchProduct()).willReturn(productSearchResult);
+        given(productService.searchProduct()).willReturn(productSearchResult);
 
         MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.get("/v1/api/products/search");
 

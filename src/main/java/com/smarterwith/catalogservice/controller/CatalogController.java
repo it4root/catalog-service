@@ -1,7 +1,7 @@
 package com.smarterwith.catalogservice.controller;
 
 import com.smarterwith.catalogservice.dto.ProductSearchDto;
-import com.smarterwith.catalogservice.service.CatalogService;
+import com.smarterwith.catalogservice.service.ProductService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CatalogController {
 
-    private CatalogService catalogService;
+    private ProductService productService;
 
     @GetMapping("/catalogs/health")
     public String health() {
@@ -23,6 +23,6 @@ public class CatalogController {
 
     @GetMapping("/products/search")
     public ProductSearchDto getProductSearch() {
-        return catalogService.searchProduct();
+        return productService.searchProduct();
     }
 }
