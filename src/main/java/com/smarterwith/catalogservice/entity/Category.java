@@ -3,17 +3,18 @@ package com.smarterwith.catalogservice.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 
 @NoArgsConstructor
 @Entity
 @Table(name = "category")
+@Log4j2
 public class Category {
 
     @Id
@@ -32,12 +33,18 @@ public class Category {
     @Column(name = "display_name", nullable = false)
     private String displayName;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "product_rel_category",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> products;
+    //@ManyToMany annotation, Set is better choice https://vladmihalcea.com/the-best-way-to-use-the-manytomany-annotation-with-jpa-and-hibernate/
+    private Set<Product> products = new LinkedHashSet<>();
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getCategories().add(this);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -49,6 +56,8 @@ public class Category {
                 Objects.equals(getDescription(), category.getDescription()) &&
                 Objects.equals(getDisplayName(), category.getDisplayName());
     }
+
+
 
     @Override
     public int hashCode() {

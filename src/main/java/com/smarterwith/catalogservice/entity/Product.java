@@ -4,10 +4,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 
 @NoArgsConstructor
@@ -54,9 +51,8 @@ public class Product {
     )
     private List<Image> images;
 
-    @ManyToMany(mappedBy = "products")
-    private List <Category> categories;
-
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    private List<Category> categories = new ArrayList<>();
 
     @Override
     public int hashCode() {
@@ -68,15 +64,11 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return getId().equals(product.getId()) &&
-                getVersion().equals(product.getVersion()) &&
-                getArticleNumber().equals(product.getArticleNumber()) &&
-                getName().equals(product.getName()) &&
-                Objects.equals(getDescription(), product.getDescription()) &&
-                Objects.equals(getPrice(), product.getPrice()) &&
-                getPublishStatus() == product.getPublishStatus() &&
-                Objects.equals(getImages(), product.getImages()) &&
-                Objects.equals(getCategories(), product.getCategories());
+        return getArticleNumber().equals(product.getArticleNumber())
+                && getName().equals(product.getName())
+                && Objects.equals(getDescription(), product.getDescription())
+                && Objects.equals(getPrice(), product.getPrice()) &&
+                getPublishStatus() == product.getPublishStatus();
     }
 
     public UUID getId() {
@@ -166,4 +158,6 @@ public class Product {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+
 }

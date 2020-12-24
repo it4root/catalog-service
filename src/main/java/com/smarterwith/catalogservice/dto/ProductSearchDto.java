@@ -18,7 +18,6 @@ public class ProductSearchDto {
 
     private String freeTextSearch;
     private String sort;
-    private String categoryCode;
     private List<ProductDto> products;
     private PaginationDto pagination;
 

@@ -30,10 +30,10 @@ public class Price {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Price price = (Price) o;
-        return getId().equals(price.getId()) &&
-                getCurrencyIso().equals(price.getCurrencyIso()) &&
-                getBaseAmount().equals(price.getBaseAmount()) &&
-                getProduct().equals(price.getProduct());
+        return  getCurrencyIso().equals(price.getCurrencyIso()) &&
+                getBaseAmount().equals(price.getBaseAmount()); //&&
+                //getProduct().equals(price.getProduct()
+               // );
     }
 
     @Override

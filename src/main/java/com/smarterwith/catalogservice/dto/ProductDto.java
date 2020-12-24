@@ -1,10 +1,7 @@
 package com.smarterwith.catalogservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -19,6 +16,7 @@ public class ProductDto {
     private String description;
     private String code;
     private List<ImageDto> images;
+    private String categoryCode;
     private PriceDto price;
 
 }

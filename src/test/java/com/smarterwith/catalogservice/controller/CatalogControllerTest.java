@@ -32,7 +32,7 @@ class CatalogControllerTest {
     public void getProductSearch_HasCorrectJsonStructure() throws Exception {
         ProductSearchDto productSearchResult = ProductSearchDto.builder()
                 .freeTextSearch(StringUtils.EMPTY)
-                .categoryCode("book")
+              //TODOD  .categoryCode("book")
                 .sort("price-desc")
                 .pagination(PaginationDto.builder().currentPage(1).limit(20).totalSize(1).build())
                 .products(Lists.newArrayList(
