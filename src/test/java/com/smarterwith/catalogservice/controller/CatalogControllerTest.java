@@ -45,7 +45,7 @@ class CatalogControllerTest {
                                 .build()
                 )).build();
 
-        given(productService.searchProduct()).willReturn(productSearchResult);
+       // given(productService.searchProduct()).willReturn(productSearchResult);
 
         MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.get("/v1/api/products/search");
 

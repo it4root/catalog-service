@@ -38,7 +38,6 @@ public class Category {
             name = "product_rel_category",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    //@ManyToMany annotation, Set is better choice https://vladmihalcea.com/the-best-way-to-use-the-manytomany-annotation-with-jpa-and-hibernate/
     private Set<Product> products = new LinkedHashSet<>();
 
     public void addProduct(Product product) {

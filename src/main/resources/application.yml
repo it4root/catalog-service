@@ -17,3 +17,10 @@ spring:
     show-sql: true
 server:
   port: 8083
+catalog:
+  name: test
+  pagination:
+    default-size: 20
+    default-start: 0
+    default-sort: price-desc
+
