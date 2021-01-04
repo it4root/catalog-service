@@ -1,6 +1,7 @@
 package com.smarterwith.catalogservice;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -22,6 +23,7 @@ public class CatalogProperties {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class Pagination{
         @NotNull
         private int defaultSize;

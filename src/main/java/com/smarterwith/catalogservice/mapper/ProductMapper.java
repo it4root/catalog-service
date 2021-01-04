@@ -3,16 +3,17 @@ package com.smarterwith.catalogservice.mapper;
 import com.smarterwith.catalogservice.dto.ProductDto;
 import com.smarterwith.catalogservice.entity.Product;
 import com.smarterwith.catalogservice.entity.PublishStatus;
-import org.mapstruct.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Component
 public class ProductMapper {
 
-    @Autowired
     private PriceMapper priceMapper;
 
     public Product toDomainObject(ProductDto productDto){

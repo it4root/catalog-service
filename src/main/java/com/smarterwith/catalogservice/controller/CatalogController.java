@@ -3,8 +3,7 @@ package com.smarterwith.catalogservice.controller;
 import com.smarterwith.catalogservice.CatalogProperties;
 import com.smarterwith.catalogservice.dto.ProductDto;
 import com.smarterwith.catalogservice.dto.ProductSearchDto;
-import com.smarterwith.catalogservice.entity.ProductSort;
-import com.smarterwith.catalogservice.service.ProductSearch;
+import com.smarterwith.catalogservice.service.ProductSearchRequest;
 import com.smarterwith.catalogservice.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,31 +24,22 @@ public class CatalogController {
 
     private ProductService productService;
 
-    private CatalogProperties catalogProperties;
 
     @GetMapping("/health")
     public String health() {
         return "OK";
     }
 
+
     @GetMapping("/products/search")
-    @ApiOperation(value = "Returns a list of products and additional data such as available sorting, paging  and other options. It can include recommendation suggestions.")
-    public ProductSearchDto getProductSearch(@ApiParam(value = "The format of a serialized filter", example = "filter=key1:value1:key2:value2") @RequestParam(required = false, defaultValue = StringUtils.EMPTY) String filter,
-                                             @ApiParam(value = "Free text search", example = "any words") @RequestParam(required = false, defaultValue = StringUtils.EMPTY) String freeTextSearch,
-                                             @ApiParam(value = "Number of products returned", defaultValue = "20") @RequestParam(required = false) Integer limit,
-                                             @ApiParam(value = "The current page requested", defaultValue = "1") @RequestParam(required = false) Integer currentPage,
-                                             @ApiParam(value = "The current page sorting", defaultValue = "price-desc") @RequestParam(required = false) String sorting) {
+    @ApiOperation(value = "Returns a list of products and additional data such as sorting and pagination settings")
+    public ProductSearchDto getProductSearch(@ApiParam(value = "Number of products returned") @RequestParam(required = false) Integer limit,
+                                             @ApiParam(value = "The current page requested") @RequestParam(required = false) Integer currentPage,
+                                             @ApiParam(value = "The current page sorting") @RequestParam(required = false) String sorting) {
 
 
-        ProductSearch productSearch = ProductSearch.builder()
-                .filter(filter)
-                .currentPage(currentPage, catalogProperties)
-                .freeTextSearch(freeTextSearch)
-                .limit(limit, catalogProperties)
-                .sort(sorting, catalogProperties)
-                .build();
 
-        return productService.searchProduct(productSearch);
+        return productService.searchProduct(productService.buildProductSearchRequest(limit, currentPage, sorting));
     }
 
     @PostMapping("/products")
@@ -58,8 +48,5 @@ public class CatalogController {
     public void createProduct(@Valid @RequestBody ProductDto productDto) {
         productService.createProduct(productDto);
     }
-
-    //TODO: /products/recommendations
-    //TODO: /products/{productCode}/reviews
 
 }

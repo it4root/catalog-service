@@ -155,6 +155,4 @@ public class CatalogIntegrationTest {
     //TODO check modify status from pending to active -> should trigger rabbit and push notification to subscribed workers and send update to stock service
     //TODO delete product and check only with active and pending statuses return
 
-
-
 }
