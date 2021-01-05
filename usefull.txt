@@ -1,0 +1,14 @@
+JUnit: our test runner
+Mockito: for mocking dependencies
+Wiremock: for stubbing out external services
+Pact: for writing CDC tests (contract first)(spring contract) consumer first
+Selenium: for writing UI-driven end-to-end tests
+REST-assured: for writing REST API-driven end-to-end tests
+Spock:
+
+==usefull link:===
+https://habr.com/ru/post/358950/
+https://github.com/hamvocke/spring-testing
+
+
+
