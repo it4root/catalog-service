@@ -1,0 +1,16 @@
+//@GetMapping("/products/search")
+//TODO: check and use next extra filters:
+//articleNo [like], [eq]
+//category  [like], [eq]
+//status    [eq]
+//price     [lte], [gte], [eq]
+//name      [like], [eq]
+
+//It can include recommendation suggestions.
+//Free text search and sorting
+
+//TODO: /products/recommendations
+//TODO: /products/{productCode}/reviews
+
+
+=======================================================
